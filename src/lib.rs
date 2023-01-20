@@ -1,6 +1,7 @@
 use crate::response::ShodanClientResponse;
 use serde::Deserialize;
 use std::collections::HashMap;
+use tokio::runtime::Builder;
 use url::Url;
 use crate::error::ShodanError;
 use crate::error::ShodanError::ShodanClientError;
@@ -46,10 +47,10 @@ impl ShodanClient {
         return url.to_string();
     }
 
-    async fn fetch<T: for<'a> Deserialize<'a>>(
+    fn fetch<T: for<'a> Deserialize<'a>>(
         url: String,
     ) -> Result<T, ShodanError> {
-        let builder = Builder::new_multi_thread()
+        Builder::new_multi_thread()
             .enable_all()
             .build()?
             .block_on(Self::fetch_async(url))
@@ -58,8 +59,7 @@ impl ShodanClient {
     async fn fetch_async<T: for<'a> Deserialize<'a>>(
         url: String,
     ) -> Result<T, ShodanError> {
-        let bingus = reqwest::get(url).await?.json::<ShodanClientResponse<T>>().await?;
-        match bingus {
+        match reqwest::get(url).await?.json::<ShodanClientResponse<T>>().await? {
             ShodanClientResponse::Error(e) => { Err(ShodanClientError(e.error))}
             ShodanClientResponse::Response(r) => { Ok(r) }
         }
