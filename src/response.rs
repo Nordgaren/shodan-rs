@@ -11,3 +11,4 @@ pub enum ShodanClientResponse<T> {
 pub struct ErrorResponse {
     pub error: String,
 }
+

@@ -46,10 +46,20 @@ impl ShodanClient {
         return url.to_string();
     }
 
-    fn fetch<T: for<'a> Deserialize<'a>>(
+    async fn fetch<T: for<'a> Deserialize<'a>>(
         url: String,
     ) -> Result<T, ShodanError> {
-        match reqwest::blocking::get(url)?.json::<ShodanClientResponse<T>>()? {
+        let builder = Builder::new_multi_thread()
+            .enable_all()
+            .build()?
+            .block_on(Self::fetch_async(url))
+    }
+
+    async fn fetch_async<T: for<'a> Deserialize<'a>>(
+        url: String,
+    ) -> Result<T, ShodanError> {
+        let bingus = reqwest::get(url).await?.json::<ShodanClientResponse<T>>().await?;
+        match bingus {
             ShodanClientResponse::Error(e) => { Err(ShodanClientError(e.error))}
             ShodanClientResponse::Response(r) => { Ok(r) }
         }

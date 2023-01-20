@@ -1,9 +1,10 @@
 use crate::error::ShodanError::*;
+use crate::response::{ErrorResponse, ShodanClientResponse};
 
 #[derive(Debug)]
 pub enum ShodanError {
     ShodanClientError(String),
-    ReqwestError(reqwest::Error)
+    ReqwestError(reqwest::Error),
 }
 
 impl From<reqwest::Error> for ShodanError {
