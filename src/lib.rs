@@ -63,7 +63,7 @@ impl ShodanClient {
     }
 }
 
-pub fn add_optional_parameter(
+fn add_optional_parameter(
     name: &str,
     param: Option<impl ToString>,
     map: &mut HashMap<String, String>,

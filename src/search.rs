@@ -92,7 +92,7 @@ pub struct SearchResult {
 pub struct SearchResultMatch {
     pub hash: i64,
     pub asn: String,
-    pub http: Option<Http>,
+    //pub http: Option<Http>, //do not uncomment until fixed
     pub os: Option<String>,
     pub tags: Option<Vec<String>>,
     pub timestamp: String,
@@ -100,7 +100,7 @@ pub struct SearchResultMatch {
     pub transport: String,
     #[serde(rename = "_shodan")]
     pub shodan: Shodan,
-    pub ssl: Option<Ssl>,
+    //pub ssl: Option<Ssl>, //do not uncomment until fixed
     pub cloud: Option<Cloud>,
     pub hostnames: Vec<String>,
     pub location: LocationClass,
@@ -114,9 +114,9 @@ pub struct SearchResultMatch {
     pub cpe23: Option<Vec<String>>,
     pub cpe: Option<Vec<String>>,
     pub version: Option<String>,
-    //pub mysql: Option<Mysql>,
+    pub mysql: Option<Mysql>,
     pub info: Option<String>,
-    //pub vulns: Option<HashMap<String, Vuln>>,
+    pub vulns: Option<HashMap<String, Vuln>>,
     pub ipv6: Option<String>,
 }
 
@@ -141,7 +141,7 @@ pub struct Http {
     pub host: String,
     pub html: String,
     pub location: String,
-    pub components: Option<HashMap<String, Component>>,
+    //pub components: Option<HashMap<String, Component>>, //do not uncomment until fixed
     pub html_hash: i64,
     pub sitemap: Option<String>,
     pub securitytxt_hash: Option<String>,
